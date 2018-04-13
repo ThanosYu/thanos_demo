@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+      ">
+
+    <bean id="checkSign" class="com.thanos.sign.CheckSign"></bean>
+    <aop:config>
+        <aop:aspect ref="checkSign">
+            <aop:around pointcut="execution(* com.thanos.controller..*(..))" method="checkSign"/>
+            <!--<aop:around pointcut="execution(* com.thanos.controller.client.o2o.O2O4ClientController.getCategory(..))" method="checkSign"/>-->
+        </aop:aspect>
+    </aop:config>
+
+    <bean id = "changeServer" class="com.thanos.common.masterslave.ReadOnlyAspect"/>
+    <aop:config>
+        <aop:aspect ref="changeServer" order="-9999">
+            <aop:pointcut id="read" expression="execution(* com.thanos.service..*ServiceImpl.*(..)) and @annotation(com.thanos.common.masterslave.ZlSlaveDB)"/>
+            <aop:before method="read" pointcut-ref="read"/>
+            <aop:after-returning method="clear" pointcut-ref="read"/>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <aop:aspect ref="changeServer" order="-9999">
+            <aop:pointcut id="write" expression="execution(* com.thanos.service..*ServiceImpl.*(..)) and !@annotation(com.thanos.common.masterslave.ZlSlaveDB)"/>
+            <aop:before method="write" pointcut-ref="write"/>
+            <aop:after-returning method="clear" pointcut-ref="read"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

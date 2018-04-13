@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<param-configuration>
+    <!-- -->
+    <server-config name="thanos" default="true">
+        <property name="log_mode">${maven.sys.logMode}</property>
+        <property name="prop">${maven.sys.prop}</property>
+        <property name="page_size">25</property>
+        <property name="sys_session_name">manageuser_1937</property>
+        <property name="http_max_connect">200</property>
+        <property name="http_timeout">60000</property>
+        <property name="http_proxy_host"></property>
+        <!--<property name="http_proxy_host">web-proxy.jpn.hp.com</property>-->
+        <property name="http_proxy_port">8080</property>
+
+        <!--schedule job init flag-->
+        <property name="schedule_job_init_flag">false</property>
+
+        <property name="release_flg">${maven.release.flg}</property>
+
+        <property name="file_upload_dir">${maven.file.upload.dir}</property>
+        <property name="file_download_server">${maven.file.download.server}</property>
+        <property name="file_download_path">${maven.file.download.path}</property>
+
+        <!--backup-->
+        <property name="backup_file_upload_dir">${maven.backup_file_upload_dir}</property>
+
+        <!-- zenlife folder -->
+        <property name="webapp_zenlife_dir">${maven.webapp.zenlife.dir}</property>
+
+        <!-- web app folder -->
+        <property name="webapp_deploy_dir">${maven.webapp.deploy.dir}</property>
+
+        <!-- web app web xml -->
+        <property name="webapp_folder_xml_path">${maven.webapp.folder.xml.path}</property>
+
+        <!--user-->
+        <property name="user_auth_check_url">${maven.user_auth_check_url}</property>
+
+        <!--sc-->
+        <property name="sc_user_add_url">${maven.user_add_url}</property>
+
+        <!--ledong verifycode-->
+        <property name="ledong_verify_url">${maven.lendong_verify_url}</property>
+
+        <!--ledong user-->
+        <property name="ledong_user_url">${maven.ledong_user_url}</property>
+
+        <!--ledong reset password-->
+        <property name="ledong_reset_password">${maven.ledong_reset_password}</property>
+
+        <!--user point-->
+        <property name="user_point_url">${maven.user_point_url}</property>
+
+        <!--system control-->
+        <property name="shengshier_system_flag">${maven.shengshier_system_flag}</property>
+
+        <!-- shengshier server-->
+        <property name="shengshier_server_url">${maven.shengshier_server_url}</property>
+
+        <!--zenlife test head upload-->
+        <property name="zenlife_upload_head_test">${maven.zenlife_upload_head_test}</property>
+
+        <!-- duiba record-->
+        <property name="duiba_record_url">${maven.duiba_record_url}</property>
+
+        <!-- album card-->
+        <property name="album_card_url">${maven.album_card_url}</property>
+
+        <!-- sc api-->
+        <property name="sc_api_flag">${maven.sc_api_flag}</property>
+
+        <!-- SC_SMS_API_HOME-->
+        <property name="sc_sms_api_home">${maven.sc_sms_api_home}</property>
+
+        <property name="sc_recharge_url">${maven.sc_recharge_url}</property>
+
+        <property name="migu_partner_id">${maven.migu_partner_id}</property>
+
+        <property name="migu_client_id">${maven.migu_client_id}</property>
+
+        <property name="migu_service_url">${maven.migu_service_url}</property>
+
+        <!-- share info url-->
+        <property name="share_info_url">${maven.share_info_url}</property>
+
+        <property name="terminal_share_info_url">${maven.terminal_share_info_url}</property>
+
+
+        <property name="weixin_base_url">${maven.weixin_base_url}</property>
+
+        <!--zenlife api host-->
+        <property name="api_host">${maven.api.host}</property>
+
+        <!-- Asus Account -->
+        <property name="asus_account_api">${maven.asus_account_api}</property>
+        <property name="asus_account_ticket_api">${maven.asus_account_ticket_api}</property>
+
+        <!--流量兑换页面 -->
+        <property name="datapass_page_url">${maven.datapass_page_url}</property>
+
+        <!-- 爱听卓乐接口 -->
+        <property name="atmd_url">${maven.atmd_url}</property>
+        <property name="atmd_key">${maven.atmd_key}</property>
+        <property name="atmd_secret">${maven.atmd_secret}</property>
+    </server-config>
+</param-configuration>

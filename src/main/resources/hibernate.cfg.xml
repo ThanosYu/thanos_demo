@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--表明解析本XML文件的DTD文档位置，DTD是Document Type Definition 的缩写,即文档类型的定义,XML解析器使用DTD文档来检查XML文件的合法性。hibernate.org/hibernate-configuration-3.0dtd可以在Hibernate3.1.3软件包中的src\org\hibernate目录中找到此文件-->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!--声明Hibernate配置文件的开始-->
+<hibernate-configuration>
+  <!--表明以下配置是针对session-factory配置的，SessionFactory是Hibernate中的一个类，这个类主要负责保存HIbernate的配置信息，以及对Session的操作-->
+  <session-factory>
+    <!-- SQL方言，这边设定的是MySQL -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <!--为true表示将Hibernate发送给数据库的sql显示出来 -->
+    <property name="show_sql">true </property>
+    <!-- 输出格式化后sql,更方便查看 -->
+    <property name="format_sql">false</property>
+    <!-- Hibernate将在SQL中生成有助于调试的注释信息, 默认值为false. 取值true|false -->
+    <property name="use_sql_comments">true</property>
+    <!-- 收集有助于性能调节的统计数据 -->
+    <property name="generate_statistics">false</property>
+
+    <!-- 在SessionFactory创建时，自动检查数据库结构，或者将数据库schema的DDL导出到数据库. 使用 create-drop时,在显式关闭SessionFactory时，将drop掉数据库schema. 取值 validate | update | create | create -->
+    <property name="hbm2ddl.auto">update</property>
+
+    <property name="hibernate.cache.region.factory_class">org.hibernate.cache.redis.SingletonRedisRegionFactory
+    </property>
+    <property name="cache.use_second_level_cache">false</property>
+    <property name="cache.use_query_cache">false</property>
+    <property name="cache.region_prefix">asuscache</property>
+    <property name="cache.use_structured_entries">true</property>
+    <property name="cache.provider_configuration_file_resource_path">hibernate-redis.properties</property>
+
+    <property name="hibernate.connection.release_mode">after_transaction</property>
+
+    <!--映射文件 -->
+    <mapping class="com.thanos.model.o2o.O2OBanner"/>
+    <mapping class="com.thanos.model.o2o.O2OCategory"/>
+    <mapping class="com.thanos.model.o2o.O2OModule"/>
+    <mapping class="com.thanos.model.kdniao.ShipperCode"/>
+  </session-factory>
+</hibernate-configuration>

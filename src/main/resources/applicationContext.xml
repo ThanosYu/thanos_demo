@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+    <!--开启注解处理器-->
+    <context:annotation-config/>
+    <!-- 开启组件扫描，自动扫描web包 ,将带有注解的类 纳入spring容器管理 -->
+    <context:component-scan base-package="com"/>
+    <!--支持注解-->
+    <tx:annotation-driven/>
+
+    <!--PropertyPlaceholderConfigurer是个bean工厂后置处理器的实现，也就是 BeanFactoryPostProcessor接口的一个实现。PropertyPlaceholderConfigurer可以将上下文（配置文 件）中的属性值放在另一个单独的标准java Properties文件中去。在XML文件中用${key}替换指定的properties文件中的值。这样的话，只需要对properties文件进 行修改，而不用对xml配置文件进行修改-->
+    <bean id="configurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>classpath*:database.properties</value>
+        </property>
+    </bean>
+
+    <bean id="dataSourceMaster" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+        <property name="driver">
+            <value>${proxool.driver}</value>
+        </property>
+        <property name="driverUrl">
+            <value>${proxool.url}</value>
+        </property>
+        <property name="user">
+            <value>${proxool.username}</value>
+        </property>
+        <property name="password">
+            <value>${proxool.password}</value>
+        </property>
+        <property name="alias">
+            <value>${proxool.alias}</value>
+        </property>
+        <property name="simultaneousBuildThrottle">
+            <value>${proxool.simultaneousBuildThrottle}</value>
+        </property>
+        <property name="maximumConnectionCount">
+            <value>${proxool.maximumConnectionCount}</value>
+        </property>
+        <property name="minimumConnectionCount">
+            <value>${proxool.minimumConnectionCount}</value>
+        </property>
+        <!--<property name="maximumActiveTime">-->
+        <!--<value>${proxool.maximumActiveTime}</value>-->
+        <!--</property>-->
+    </bean>
+
+    <bean id="dataSourceSlave" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+        <property name="driver">
+            <value>${proxool.driver}</value>
+        </property>
+        <property name="driverUrl">
+            <value>${proxool.url.slave}</value>
+        </property>
+        <property name="user">
+            <value>${proxool.username.slave}</value>
+        </property>
+        <property name="password">
+            <value>${proxool.password.slave}</value>
+        </property>
+        <property name="alias">
+            <value>${proxool.alias.slave}</value>
+        </property>
+        <property name="simultaneousBuildThrottle">
+            <value>${proxool.simultaneousBuildThrottle}</value>
+        </property>
+        <property name="maximumConnectionCount">
+            <value>${proxool.maximumConnectionCount}</value>
+        </property>
+        <property name="minimumConnectionCount">
+            <value>${proxool.minimumConnectionCount}</value>
+        </property>
+        <!--<property name="maximumActiveTime">-->
+        <!--<value>${proxool.maximumActiveTime}</value>-->
+        <!--</property>-->
+    </bean>
+
+
+     <!--定义使用Proxool连接池的数据源-->
+    <!--<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">-->
+        <!--&lt;!&ndash; 指定连接数据库的JDBC驱动 &ndash;&gt;-->
+        <!--<property name="driver">-->
+            <!--<value>${proxool.driver}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接数据库所用的URL &ndash;&gt;-->
+        <!--<property name="driverUrl">-->
+            <!--<value>${proxool.url}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接数据库的用户名 &ndash;&gt;-->
+        <!--<property name="user">-->
+            <!--<value>${proxool.username}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接数据库的密码 &ndash;&gt;-->
+        <!--<property name="password">-->
+            <!--<value>${proxool.password}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 连接池标识， 用于确定从何处获取数据库连接池， 每个ProxoolDataSource 必须具有不同的 alias &ndash;&gt;-->
+        <!--<property name="alias">-->
+            <!--<value>${proxool.alias}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 为避免连接创建过载， 所允许的同时创建（处于未完成状态）的最大连接数 &ndash;&gt;-->
+        <!--<property name="simultaneousBuildThrottle">-->
+            <!--<value>${proxool.simultaneousBuildThrottle}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 可以允许存在的最大连接数 &ndash;&gt;-->
+        <!--<property name="maximumConnectionCount">-->
+            <!--<value>${proxool.maximumConnectionCount}</value>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 保持打开状态的最小连接数 &ndash;&gt;-->
+        <!--<property name="minimumConnectionCount">-->
+            <!--<value>${proxool.minimumConnectionCount}</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- 定义数据源，使用自己实现的数据源 -->
+    <bean id="dataSource" class="com.thanos.common.masterslave.DynamicDataSource">
+        <!-- 设置多个数据源 -->
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <!-- 这个key需要和程序中的key一致 -->
+                <entry key="master" value-ref="dataSourceMaster"/>
+                <entry key="slave" value-ref="dataSourceSlave"/>
+            </map>
+        </property>
+        <!-- 设置默认的数据源，这里默认走写库 -->
+        <property name="defaultTargetDataSource" ref="dataSourceMaster"/>
+    </bean>
+
+    <!-- （把数据源注入给session工厂）、配置映射文件将Spring与hibernate初步整合起来 -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <!-- 配置声明式的事务管理（采用基于注解的方式）session工厂注入到事务管理器transactionManager使Spring与Hinbernate整合实现业务逻辑   -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="500"/>
+        <property name="maxIdle" value="200"/>
+        <property name="maxWaitMillis" value="10000"/>
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="localhost"/>
+        <constructor-arg index="2" value="6379" type="int"/>
+    </bean>
+
+    <bean name="jedis" factory-bean="jedisPool" factory-method="getResource"/>
+
+    <bean id="redisCachePlugin" class="com.thanos.cache.RedisCachePlugin" scope="prototype">
+        <property name="pool" ref="jedisPool"></property>
+    </bean>
+
+    <import resource="applicationContext-sign.xml"/>
+</beans>

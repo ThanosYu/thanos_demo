@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="thanos_demo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="thanos_demo.war">
+      <element id="artifact" artifact-name="thanos_demo:war exploded" />
+    </root>
+  </artifact>
+</component>
