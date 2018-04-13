@@ -71,7 +71,7 @@ public class ToutiaoApi {
         sb.append(OS_VERSION);
         sb.append("&device_model=");
         sb.append(DEVICE_MODEL);
-        System.out.println("----------------url: " + sb.toString());
+        System.out.println("---------------------------url: " + sb.toString());
         return sb.toString();
     }
 
