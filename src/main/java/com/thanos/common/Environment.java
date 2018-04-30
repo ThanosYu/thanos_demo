@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class Environment {
-    public static String envName = "zenlife";
+    private static String envName = "zenlife";
     //public static String realPath="";
     private static Properties systemParam = null;
     private static Properties systemProp = null;
