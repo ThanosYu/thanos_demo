@@ -36,11 +36,11 @@
 
                 <!-- jdbc.properties -->
                 <maven.jdbc.username>root</maven.jdbc.username>
-                <maven.jdbc.password>ysq19900930</maven.jdbc.password>
+                <maven.jdbc.password>9009</maven.jdbc.password>
                 <maven.jdbc.url>jdbc:mysql://localhost:3306/thanos?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8</maven.jdbc.url>
 
                 <maven.jdbc.username.slave>root</maven.jdbc.username.slave>
-                <maven.jdbc.password.slave>ysq19900930</maven.jdbc.password.slave>
+                <maven.jdbc.password.slave>9009</maven.jdbc.password.slave>
                 <maven.jdbc.url.slave>jdbc:mysql://localhost:3306/thanos_slave?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=utf-8</maven.jdbc.url.slave>
 
                 <!-- hibernate -->
@@ -275,11 +275,11 @@
         <version>2.6.0</version>
         </dependency>
 
-        <dependency>
-        <groupId>com.github.debop</groupId>
-        <artifactId>hibernate-redis</artifactId>
-        <version>1.6.1</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.github.debop</groupId>-->
+        <!--<artifactId>hibernate-redis</artifactId>-->
+        <!--<version>1.6.1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>de.ruedigermoeller</groupId>
