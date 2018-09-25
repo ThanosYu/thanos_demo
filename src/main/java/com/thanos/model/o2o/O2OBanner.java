@@ -22,7 +22,7 @@ import java.io.Serializable;
 public class O2OBanner implements Serializable {
 
     /**
-     * 地址，唯一的
+     * 地址，唯一
      */
     @Id
     @GeneratedValue
